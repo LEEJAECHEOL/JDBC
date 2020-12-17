@@ -1,0 +1,13 @@
+package config;
+
+import java.sql.Connection;
+
+public class DBConnection {
+	
+	public static Connection getInstance() {
+		Connection con = null;
+		// thin : 순수하게 자바 패키지들만으로 디비와 연결
+		// oci : 특정한 운영체제 내에서만 돌아가는 함수 사용
+		String url = "jdbc:oracle:thin:@";
+	}
+}

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="DBConnectionTest" project="dbimpl" tests="1" started="1" failures="0" errors="0" ignored="0">
+  <testsuite name="test.config.DBConnectionTest" time="0.373">
+    <testcase name="데이터베이스연결_테스트" classname="test.config.DBConnectionTest" time="0.373"/>
+  </testsuite>
+</testrun>
