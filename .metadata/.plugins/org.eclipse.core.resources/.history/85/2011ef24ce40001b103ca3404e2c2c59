@@ -1,0 +1,15 @@
+package dao;
+
+import java.sql.Connection;
+
+import config.MySQLConnection;
+import model.User;
+
+public class UserDao {
+	public User delete(int id) {
+		Connection conn = MySQLConnection.getConnection();
+		
+	}
+	
+	
+}

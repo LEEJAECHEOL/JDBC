@@ -1,0 +1,23 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import config.MySQLConnection;
+import model.User;
+
+public class UserDao {
+	public User delete(int id) {
+		Connection conn = MySQLConnection.getConnection();
+		String query = "DELETE FROM user WHERE id = ?";
+		try {
+			PreparedStatement pstm = conn.prepareStatement(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+}
