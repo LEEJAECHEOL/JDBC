@@ -2,6 +2,7 @@ package com.cos.hello.controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 // javax로 시작하는 패키지는 톰켓이 들고있는 라이브러리.
 import javax.servlet.http.HttpServlet;
@@ -37,7 +38,7 @@ public class UserController extends HttpServlet {
 //		resp.sendRedirect("auth/login.jsp");	// 500 에러 -> 개발자가 잘못함. 응답을 보낸 후 다시 응답을 보낼 수 없다.
 	}
 	
-	private void route(String gubun, HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	private void route(String gubun, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		if(gubun.equals("login")) {
 			resp.sendRedirect("auth/login.jsp");	// 한번더 request
 		} else if(gubun.equals("join")) {
@@ -45,14 +46,21 @@ public class UserController extends HttpServlet {
 		} else if(gubun.equals("selectOne")) {	// 유저정보 보기
 			// 인증이 필요한 페이지
 			HttpSession session = req.getSession();
+			String result;
 			if(session.getAttribute("sessionUser") != null) {	// 인증끝
 				Users user  = (Users)session.getAttribute("sessionUser");
 				System.out.println("인증되었습니다.");
+				result = "인증되었습니다.";
 				System.out.println(user);
 			}else {
+				result = "인증되지 않았습니다.";
 				System.out.println("인증되지 않았습니다.");
 			}
-			resp.sendRedirect("user/selectOne.jsp");
+//			resp.sendRedirect("user/selectOne.jsp");
+			req.setAttribute("result", result);
+			//sendRedirect는 데이터가 다 날라가기 때문에 RequestDispatcher를 이용한다.
+			RequestDispatcher dis = req.getRequestDispatcher("user/selectOne.jsp");
+			dis.forward(req, resp);
 		} else if(gubun.equals("updateOne")) {
 			resp.sendRedirect("user/updateOne.jsp");
 		} else if(gubun.equals("joinProc")) {	// 회원가입을 수행해줘

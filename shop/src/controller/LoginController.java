@@ -70,6 +70,7 @@ public class LoginController extends HttpServlet {
 				System.out.println("로그인 되지 않았습니다.");
 				resp.sendRedirect("ch12/sessionLogin.jsp");
 			}
+
 		}else if(gubun.equals("sessionLogoutProc")) {
 			HttpSession session = req.getSession();
 		 	session.invalidate();
