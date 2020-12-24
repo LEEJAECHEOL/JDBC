@@ -31,5 +31,26 @@
 <h1>${sessionScope.result }</h1>
 <!-- requestScope는 적지 않는다. -->
 <h1>${result}</h1>
+<form method="post" action="user?gubun=deleteProc">
+	<table border="1">
+		<tr>
+			<th>번호</th>
+			<th>유저네임</th>
+			<th>패스워드</th>
+			<th>이메일</th>
+		</tr>
+		<tr>
+			<td>
+			<input type="hidden" name = "id" value="${user.id }"/>
+			${user.id }
+			</td>
+			<td>${user.username }</td>
+			<td>${user.password }</td>
+			<td>${user.email }</td>
+		</tr>
+	</table>
+	<button>삭제</button>
+</form>
+
 </body>
 </html>
