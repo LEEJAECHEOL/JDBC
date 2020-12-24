@@ -1,6 +1,9 @@
 package com.cos.hello.controller;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,9 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+import com.cos.hello.config.DBConn;
+import com.cos.hello.dao.UsersDao;
 import com.cos.hello.model.Users;
 
+// 디스패쳐의 역할 = 분기 = 필요한 뷰를 응답해주는 것
 public class UserController extends HttpServlet {
 	
 	// req와 res는 톰켓이 만들어준다. (사용자의 요청이 있을 때마다 만들어줌.)
@@ -65,6 +70,7 @@ public class UserController extends HttpServlet {
 			resp.sendRedirect("user/updateOne.jsp");
 		} else if(gubun.equals("joinProc")) {	// 회원가입을 수행해줘
 			// 데이터 원형 username=ssar&password=1234&email=ssar@nate.com
+			
 			// 1번 폼의 인풋태그에 있는 3가지 값 username,password,email값을 받기
 			// getParameter()함수는 get방식과 post방식 데이터를 다 받을 수 있음
 			// post방식에서는 데이터타입이 x-www-form-urlencoded방식만 받을 수 있음.
@@ -72,15 +78,29 @@ public class UserController extends HttpServlet {
 			String password = req.getParameter("password");
 			String email = req.getParameter("email");
 			
+			// 2번 DB연결해서 3가지 값을 INSERT하기
+			Users user = Users.builder()
+								.username(username)
+								.password(password)
+								.email(email)
+								.build();
+			UsersDao usersDao = new UsersDao();	// 나중에 싱글톤 패턴으로 변경
+			int result = usersDao.insert(user);
+			if(result == 1) {
+				// 3번 INSERT가 정상적으로 되었다면 index.jsp를 응답!!
+				resp.sendRedirect("auth/login.jsp");
+			}else {
+				resp.sendRedirect("auth/join.jsp");
+			}
 			System.out.println("========= joinProc Start ===========");
 			System.out.println(username);
 			System.out.println(password);
 			System.out.println(email);
 			System.out.println("========= joinProc End ===========");
-			// 2번 DB연결해서 3가지 값을 INSERT하기
-			// 생략
-			// 3번 INSERT가 정상적으로 되었다면 index.jsp를 응답!!
-			resp.sendRedirect("index.jsp");
+			
+
+			
+			
 		} else if(gubun.equals("loginProc")) {
 			// 1번 전달되는 값 받기
 			
