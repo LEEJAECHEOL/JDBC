@@ -7,14 +7,10 @@ import dto.JoinDto;
 import dto.LoginDto;
 
 public class ReflectApp {
+
 	
 	static <T> void myReflect(T dto) {
 		Method[] methods = dto.getClass().getMethods();
-		
-//		for (Method method : methods) {
-//			System.out.println(method.getName());
-//		}
-		
 		// 변수
 		Field[] fs = dto.getClass().getDeclaredFields();
 		for (Field f : fs) {
@@ -28,7 +24,6 @@ public class ReflectApp {
 				System.out.println(o);
 				
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
 		}
