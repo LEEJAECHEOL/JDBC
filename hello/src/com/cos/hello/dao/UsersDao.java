@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import com.cos.hello.config.DBConn;
+import com.cos.hello.dto.JoinDto;
+import com.cos.hello.dto.LoginDto;
 import com.cos.hello.model.Users;
 
 public class UsersDao {
@@ -13,7 +15,7 @@ public class UsersDao {
 		return instance;
 	}
 	public UsersDao() {}
-	public int insert(Users user) {
+	public int insert(JoinDto joinDto) {
 		Connection conn = DBConn.getInstance();
 		StringBuffer sb = new StringBuffer();	// String 전용 컬렉션 (동기화)
 		sb.append("INSERT INTO users(username, password, email) ");
@@ -21,9 +23,9 @@ public class UsersDao {
 		String sql = sb.toString();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, user.getUsername());
-			pstmt.setString(2, user.getPassword());
-			pstmt.setString(3, user.getEmail());
+			pstmt.setString(1, joinDto.getUsername());
+			pstmt.setString(2, joinDto.getPassword());
+			pstmt.setString(3, joinDto.getEmail());
 			int result = pstmt.executeUpdate(); // 변경된 행의 개수를 반환
 			return result;
 		} catch (Exception e) {
@@ -32,7 +34,7 @@ public class UsersDao {
 		
 		return -1;
 	}
-	public Users login(Users user) {
+	public Users login(LoginDto loginDto) {
 		Connection conn = DBConn.getInstance();
 		StringBuffer sb = new StringBuffer();	// String 전용 컬렉션 (동기화)
 		sb.append("SELECT id, username, email FROM users ");
@@ -40,8 +42,8 @@ public class UsersDao {
 		String sql = sb.toString();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, user.getUsername());
-			pstmt.setString(2, user.getPassword());
+			pstmt.setString(1, loginDto.getUsername());
+			pstmt.setString(2, loginDto.getPassword());
 			ResultSet rs = pstmt.executeQuery();
 			if(rs.next()) {
 				Users userEntity = Users.builder()

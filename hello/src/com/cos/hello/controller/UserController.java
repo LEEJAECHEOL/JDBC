@@ -33,6 +33,8 @@ public class UserController extends HttpServlet {
 		System.out.println("UserController 실행됨.");
 //		String gubun = req.getRequestURI();		// /hello/front
 		String gubun = req.getParameter("gubun");	// ? 뒤에 있는 값을 파싱해줌.
+//		resp.setCharacterEncoding("UTF-8");
+		
 		System.out.println(gubun);
 		// 아래를 라우터라고 부른다.
 		route(gubun, req, resp);
@@ -40,7 +42,7 @@ public class UserController extends HttpServlet {
 	}
 	
 	private void route(String gubun, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-
+		
 		UsersService usersService = new UsersService();
 		if(gubun.equals("login")) {
 			resp.sendRedirect("auth/login.jsp");	// 한번더 request

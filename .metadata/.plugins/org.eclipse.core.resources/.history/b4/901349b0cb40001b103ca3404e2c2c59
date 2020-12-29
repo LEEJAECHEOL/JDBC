@@ -1,9 +1,0 @@
-package config;
-
-import java.sql.Connection;
-
-public class MySQLConnection {
-	Connection conn = null;
-	String url = "jdbc:mysql://localhost:3306/sys?serverTimezone=Asia/Seoul";
-	
-}

@@ -1,6 +1,0 @@
-package dao;
-
-// Data Access Object (데이터에 접근하게 해주는 객체) -> 재사용
-public class DeptDao {
-
-}
